@@ -6,6 +6,8 @@ var defaultEntry = {
     "date-reported" : new Date(),
     "location" : "Location.",
     "demand" : "Demand.",
+    "author" : "Berk",
+    "background-color" : "#00ffff",
     "photo-url" : "https://37e7-63-208-141-34.ngrok-free.app/img/trash1.jpg",
     "tags" : "Pollution"
 }

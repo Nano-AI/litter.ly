@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const app = express();
 const queryHandler = require('./queryHandling');
+const { raw } = require('body-parser');
 TAFFY = require('taffy');
 
 /*
@@ -23,6 +24,8 @@ var pollutionDatabase = TAFFY([
         "date-reported" : new Date(),
         "location" : "Seattle",
         "demand" : "HIGH",
+        "author" : "Berk",
+        "background-color" : "#00ffff",
         "photo-url" : "https://37e7-63-208-141-34.ngrok-free.app/img/trash1.jpg",
         "tags" : "Pollution"
     },
@@ -32,6 +35,8 @@ var pollutionDatabase = TAFFY([
         "date-reported" : new Date(),
         "location" : "Seattle",
         "demand" : "HIGH",
+        "author" : "Berk",
+        "background-color" : "#00ffff",
         "photo-url" : "https://37e7-63-208-141-34.ngrok-free.app/img/trash2.jpg",
         "tags" : "Pollution"
     },
@@ -41,6 +46,8 @@ var pollutionDatabase = TAFFY([
         "date-reported" : new Date(),
         "location" : "SanFrancisco",
         "demand" : "HIGH",
+        "author" : "Berk",
+        "background-color" : "#00ffff",
         "photo-url" : "https://37e7-63-208-141-34.ngrok-free.app/img/trash3.jpg",
         "tags" : "Pollution"
     },
@@ -50,6 +57,8 @@ var pollutionDatabase = TAFFY([
         "date-reported" : new Date(),
         "location" : "Issaquah",
         "demand" : "HIGH",
+        "author" : "Berk",
+        "background-color" : "#00ffff",
         "photo-url" : "https://37e7-63-208-141-34.ngrok-free.app/img/trash4.jpg",
         "tags" : "Pollution"
     },
@@ -59,10 +68,14 @@ var pollutionDatabase = TAFFY([
         "date-reported" : new Date(),
         "location" : "SanFrancisco",
         "demand" : "HIGH",
+        "author" : "Berk",
+        "background-color" : "#00ffff",
         "photo-url" : "https://37e7-63-208-141-34.ngrok-free.app/img/trash5.jpg",
         "tags" : "Pollution"
     },
 ]);
+
+// ___id
 
 // Handle database querying from here
 app.get('/getentries/:query', (req, res) => {
@@ -93,12 +106,36 @@ app.get('/insertdb/:query', (req, res) => {
     res.end();
 });
 
-app.get('/selectdb/:getquery/:selectionquery', (req, res) => {
+// SELECTION is the filtering, GETTING is the actual data you want and shit
+app.get('/selectdb/:key/:selectionquery', (req, res) => {
+    let rawSelectionQuery = req.params.selectionquery;
+
+    //let getObject = queryHandler.constructQueryObject(rawGetQuery);
+    let getKey = req.params.key;
+    let selectObject = queryHandler.constructQueryObject(rawSelectionQuery);
+
+    // Compile all pollution data into a large array, serve as a large object
+    let pollution = pollutionDatabase(selectObject);
+    let bulkArray = pollution.select(getKey);
+
+    // Send out in bulk
+    res.write(JSON.stringify(bulkArray));
+    res.end();
 
 });
 
-app.get('/updatedb/:query', (req, res) => {
+// SELECTION is the filtering, SETTING is the variables you want to set!
+app.get('/updatedb/:setquery/:selectionquery', (req, res) => {
+    let rawSetQuery = req.params.setquery;
+    let rawSelectionQuery = req.params.selectionquery;
 
+    let setObject = queryHandler.constructQueryObject(rawSetQuery);
+    let selectObject = queryHandler.constructQueryObject(rawSelectionQuery);
+
+    // Compile all pollution data into a large array, serve as a large object
+    let pollution = pollutionDatabase(selectObject);
+    pollution.update(setObject);
+    res.end();
 });
 
 // Route server app to images
