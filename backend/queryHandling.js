@@ -9,7 +9,8 @@ var defaultEntry = {
     "author" : "Berk",
     "background-color" : "#00ffff",
     "photo-url" : "https://37e7-63-208-141-34.ngrok-free.app/img/trash1.jpg",
-    "tags" : "Pollution"
+    "tags" : "Pollution",
+    "partOfDB" : "true"
 }
 
 // Join provided path directory with the path variable, send the file to client

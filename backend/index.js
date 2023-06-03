@@ -1,5 +1,6 @@
 const path = require('path');
 const express = require('express');
+const fs = require('fs')
 const app = express();
 const queryHandler = require('./queryHandling');
 const { raw } = require('body-parser');
@@ -17,7 +18,8 @@ TAFFY = require('taffy');
 */
 
 // Severity is on a scale of 1-5
-var pollutionDatabase = TAFFY([
+var pollutionDatabase = TAFFY(JSON.parse(fs.readFileSync('db.json')));
+/*var pollutionDatabase = TAFFY([
     { 
         "description"  : "VERY SEVERE TRASH IN SEATTLE.",
         "severity"  : "5",
@@ -27,7 +29,8 @@ var pollutionDatabase = TAFFY([
         "author" : "Berk",
         "background-color" : "#00ffff",
         "photo-url" : "https://37e7-63-208-141-34.ngrok-free.app/img/trash1.jpg",
-        "tags" : "Pollution"
+        "tags" : "Pollution",
+        "partOfDB" : "true"
     },
     { 
         "description"  : "BUNCH OF GARBAGE IN SEATTLE.",
@@ -38,7 +41,8 @@ var pollutionDatabase = TAFFY([
         "author" : "Berk",
         "background-color" : "#00ffff",
         "photo-url" : "https://37e7-63-208-141-34.ngrok-free.app/img/trash2.jpg",
-        "tags" : "Pollution"
+        "tags" : "Pollution",
+        "partOfDB" : "true"
     },
     { 
         "description"  : "CLEANUP ON AISLE 5 IN SANFRANCISCO.",
@@ -49,7 +53,8 @@ var pollutionDatabase = TAFFY([
         "author" : "Berk",
         "background-color" : "#00ffff",
         "photo-url" : "https://37e7-63-208-141-34.ngrok-free.app/img/trash3.jpg",
-        "tags" : "Pollution"
+        "tags" : "Pollution",
+        "partOfDB" : "true"
     },
     { 
         "description"  : "TERRIBLE WASTE IN ISSAQUAH.",
@@ -60,7 +65,8 @@ var pollutionDatabase = TAFFY([
         "author" : "Berk",
         "background-color" : "#00ffff",
         "photo-url" : "https://37e7-63-208-141-34.ngrok-free.app/img/trash4.jpg",
-        "tags" : "Pollution"
+        "tags" : "Pollution",
+        "partOfDB" : "true"
     },
     { 
         "description"  : "EVEN MORE TRASH IN SAN FRANCISCO.",
@@ -71,11 +77,27 @@ var pollutionDatabase = TAFFY([
         "author" : "Berk",
         "background-color" : "#00ffff",
         "photo-url" : "https://37e7-63-208-141-34.ngrok-free.app/img/trash5.jpg",
-        "tags" : "Pollution"
+        "tags" : "Pollution",
+        "partOfDB" : "true"
     },
-]);
+]);*/
 
 // ___id
+function saveDatabaseToServer () {
+    let queryObject = queryHandler.constructQueryObject("partOfDB=true");
+
+    // Compile all pollution data into a large array, serve as a large object
+    let pollution = pollutionDatabase(queryObject);
+    let bulkArray = [];
+    pollution.each(item => {
+        bulkArray.push(item);
+    });
+
+    fs.writeFile('./db.json', JSON.stringify(bulkArray), function (err) {
+        if (err) throw err;
+        console.log('Saved!');
+    }); 
+}
 
 // Handle database querying from here
 app.get('/getentries/:query', (req, res) => {
@@ -91,7 +113,7 @@ app.get('/getentries/:query', (req, res) => {
 
     // Send out in bulk
     res.write(JSON.stringify(bulkArray));
-
+    saveDatabaseToServer();
     res.end();
 });
 
@@ -102,7 +124,7 @@ app.get('/insertdb/:query', (req, res) => {
 
     queryObject = queryHandler.populateAllKeyFields(queryObject);
     pollutionDatabase.insert(queryObject);
-
+    saveDatabaseToServer();
     res.end();
 });
 
@@ -120,6 +142,7 @@ app.get('/selectdb/:key/:selectionquery', (req, res) => {
 
     // Send out in bulk
     res.write(JSON.stringify(bulkArray));
+    saveDatabaseToServer();
     res.end();
 
 });
@@ -135,6 +158,7 @@ app.get('/updatedb/:setquery/:selectionquery', (req, res) => {
     // Compile all pollution data into a large array, serve as a large object
     let pollution = pollutionDatabase(selectObject);
     pollution.update(setObject);
+    saveDatabaseToServer();
     res.end();
 });
 
