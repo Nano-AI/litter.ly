@@ -9,6 +9,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 import "./NavBar.css";
 
+import { ReactComponent as Logo } from "../../logo.svg";
+import SvgIcon from '@mui/material/SvgIcon';
+
 function NavBar() {
   return (
     <Box sx={{ flexGrow: 1 }} id="navbar">
@@ -23,8 +26,10 @@ function NavBar() {
           >
             <MenuIcon />
           </IconButton>
+              <Logo />
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
+            <SvgIcon>
+            </SvgIcon>
           </Typography>
           <Button color="inherit">Login</Button>
         </Toolbar>

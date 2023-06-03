@@ -20,17 +20,7 @@ function EventCardHolder() {
         alignItems="flex-start"
         /*id="event-grid"*/
       >
-        <EventCard title="Testing" description="Testingasdf asdfasdfasdfasdfasd" time="July 1st, 2023, 5am" />
-        <EventCard title="Testing" description="Testingasdf asdfasdfasdfasdfasd" time="July 1st, 2023, 5am" />
-        <EventCard title="Testing" description="Testingasdf asdfasdfasdfasdfasd" time="July 1st, 2023, 5am" />
-        <EventCard title="Testing" description="Testingasdf asdfasdfasdfasdfasd" time="July 1st, 2023, 5am" />
-        <EventCard title="Testing" description="Testingasdf asdfasdfasdfasdfasd" time="July 1st, 2023, 5am" />
-        <EventCard title="Testing" description="Testingasdf asdfasdfasdfasdfasd" time="July 1st, 2023, 5am" />
-        <EventCard title="Testing" description="Testingasdf asdfasdfasdfasdfasd" time="July 1st, 2023, 5am" />
-        <EventCard title="Testing" description="Testingasdf asdfasdfasdfasdfasd" time="July 1st, 2023, 5am" />
-        <EventCard title="Testing" description="Testingasdf asdfasdfasdfasdfasd" time="July 1st, 2023, 5am" />
-        <EventCard title="Testing" description="Testingasdf asdfasdfasdfasdfasd" time="July 1st, 2023, 5am" />
-        <EventCard title="Testing" description="Testingasdf asdfasdfasdfasdfasd" time="July 1st, 2023, 5am" />
+        <EventCard tags="#survivng #jkwerealldyingofpollution" author="test" title="Testing" description="Testingasdf asdfasdfasdfasdfasd" time="July 1st, 2023, 5am" />
       </Grid>
     </Container>
     </div>

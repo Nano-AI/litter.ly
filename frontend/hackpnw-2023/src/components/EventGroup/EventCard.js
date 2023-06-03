@@ -59,6 +59,7 @@ export default function EventCard(props) {
   var demand = props.demand;
   let photo = props.photo;
   let tags = props.tags;
+  let author = props.author;
 
   return (
     <Grid item class="event-grid" style={{ width: "100%" }} /*xs={12} sm={6} md={8}*/>
@@ -67,7 +68,7 @@ export default function EventCard(props) {
           <CardHeader
             avatar={
               <Avatar sx={{ bgcolor: red[500], flex: '1 0 auto' }} aria-label="recipe">
-                R
+                {author.charAt(0)}
               </Avatar>
             }
             action={
@@ -77,10 +78,15 @@ export default function EventCard(props) {
             }
             title={title}
             subheader={time}
+            titleTypographyProps={{variant:'h5' }} 
+            subheaderTypographyProps={{variant: 'body1'}}
           />
           <CardContent>
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="body1" color="text.primary">
               {description}
+            </Typography>
+            <Typography variant="body1" color="info.main">
+              {tags}
             </Typography>
           </CardContent>
           <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
