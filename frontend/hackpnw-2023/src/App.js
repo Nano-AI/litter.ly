@@ -1,10 +1,10 @@
 import './App.css';
-import EventCard from './components/EventCard';
+import EventGroup from './components/EventGroup/EventGroup';
 
 function App() {
   return (
     <div className="App">
-      <EventCard />
+      <EventGroup /> 
     </div>
   );
 }
