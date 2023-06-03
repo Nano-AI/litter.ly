@@ -1,7 +1,7 @@
 const path = require('path');
 const express = require('express');
 const app = express();
-
+const queryHandler = require('./queryHandling');
 TAFFY = require('taffy');
 
 /*
@@ -64,58 +64,10 @@ var pollutionDatabase = TAFFY([
     },
 ]);
 
-// Join provided path directory with the path variable, send the file to client
-function handleFile (req, res, pathDir) {
-    let name = req.params.filename;
-    const options = {
-        root: path.join(pathDir)
-    };
-
-    // If it's a verifiable file name, try sending the file
-    if (name.includes(".")) {
-        res.sendFile(name, options, (err) => {
-            if (err) {
-                console.log("FILE SENDING ERROR: " + err);
-            }
-        });
-    }
-
-    // Otherwise send a 404
-    else {
-        res.end("404 NOT FOUND");
-    }
-} 
-
-// Only handle files from designated folders 
-app.get('/pingdb/:query', (req, res) => {
+// Handle database querying from here
+app.get('/getentries/:query', (req, res) => {
     let rawQuery = req.params.query;
-    let splitQueries = rawQuery.split(';');
-    let queryObject = {};
-    let stringifiedQuery = "{";
-    let querySize = splitQueries.length;
-
-    for (let n = 0; n < querySize; n++) {
-        // Get current item
-        let item = splitQueries[n];
-        
-        console.log("Item: "+item);
-        let qSplit = item.split('=');
-        // Split into key and fields
-        let key = qSplit[0].toString();
-        let field = qSplit[1].toString();
-
-        console.log("Key: " + key + " Field: " + field);
-        
-        stringifiedQuery += `"${key}" : "${field}"`;    
-        // Last variable
-        if (n == querySize-1) {
-            stringifiedQuery += '}';
-        }  
-        else stringifiedQuery += ',';
-    }
-    // Debug
-    console.log(stringifiedQuery);
-    queryObject = JSON.parse(stringifiedQuery);
+    let queryObject = queryHandler.constructQueryObject(rawQuery);
 
     // Compile all pollution data into a large array, serve as a large object
     let pollution = pollutionDatabase(queryObject);
@@ -123,13 +75,35 @@ app.get('/pingdb/:query', (req, res) => {
     pollution.each(item => {
         bulkArray.push(item);
     });
+
+    // Send out in bulk
     res.write(JSON.stringify(bulkArray));
 
     res.end();
 });
 
+// Handle insertion / data setting requests from the server
+app.get('/insertdb/:query', (req, res) => {
+    let rawQuery = req.params.query;
+    let queryObject = queryHandler.constructQueryObject(rawQuery);
+
+    queryObject = queryHandler.populateAllKeyFields(queryObject);
+    pollutionDatabase.insert(queryObject);
+
+    res.end();
+});
+
+app.get('/selectdb/:getquery/:selectionquery', (req, res) => {
+
+});
+
+app.get('/updatedb/:query', (req, res) => {
+
+});
+
+// Route server app to images
 app.get('/img/:filename', (req, res) => {
-    handleFile(req, res, "./img/");
+    queryHandler.handleFile(req, res, "./img/");
 });
 
 
