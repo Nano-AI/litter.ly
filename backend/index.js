@@ -1,6 +1,15 @@
 const path = require('path');
 const express = require('express');
 const app = express();
+let mongo = require('mongodb');
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/admin";
+
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  console.log("Database created!");
+  db.close();
+}).catch(e => {console.log(e);});
 
 // Join provided path directory with the path variable, send the file to client
 function handleFile (req, res, pathDir) {
