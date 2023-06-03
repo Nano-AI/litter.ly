@@ -1,10 +1,10 @@
 import './App.css';
-import BasicExample from './components/Navbar';
+import EventCard from './components/EventCard';
 
 function App() {
   return (
     <div className="App">
-      <BasicExample />
+      <EventCard />
     </div>
   );
 }
