@@ -6,4 +6,6 @@
   width: 100%;
 }
 
-
+.card-location {
+  padding: 0 !important;
+}
