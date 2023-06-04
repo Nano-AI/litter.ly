@@ -12,7 +12,7 @@ function EventCardHolder() {
 
   const [state, setState] = React.useState({ data: null });
 
-  let url = "https://14ef-216-9-29-203.ngrok-free.app/";
+  let url = "https://95f7-216-9-29-203.ngrok-free.app/";
 
   // const xhr = new XMLHttpRequest();
   // const post = url + "getentries/partOfDB=true";
@@ -47,7 +47,7 @@ function EventCardHolder() {
         justify="flex-start"
         alignItems="flex-start"
       >
-        <EventCard tags="#survivng #jkwerealldyingofpollution" author="test" title="Testing" description="Testingasdf asdfasdfasdfasdfasd" time="July 1st, 2023, 5am" />
+        <EventCard severity={1} tags="#survivng #jkwerealldyingofpollution" author="test" title="Testing" description="aaslk;dfj askl;djf a;slkdjf as;lkdfjasd;lkfj as;lkfj asdl;kdfj as;lkdfj as;lkfj as;lkdfj as;lkdfj;jlkasdjf al;ksdjfkl;asd fjask;lfj aaslkd;fj as;lkd fjaslk;ds;kldfj fl asl;kdfjasl;kd fjas;lkdfj asl;kdfj asl;kdfj asl;kdfj asl;kdfj as;lkfj a;lks j sdf;askdjfasl;kdfjas;lkdfj askl;dfj asl;kdfj asl;kd jalks;fj asl;kfj alk;sdjf asl;kdfja;lsdfjasl;kdfj a;slkfj as;lkfj as;lkjf a;klsTestingasdf asdfasdfasdfasdfasd" time="July 1st, 2023, 5am" />
       </Grid>
     </Container>
     </div>
