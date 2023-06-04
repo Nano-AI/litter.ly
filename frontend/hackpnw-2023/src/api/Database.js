@@ -1,15 +1,17 @@
-const ngrokUrl = "https://49a4-216-9-29-196.ngrok-free.app";
+const ngrokUrl = "https://0670-63-208-141-34.ngrok-free.app";
 const safeUrl = "https:--49a4-216-9-29-196.ngrok-free.app";
-const url = 'https://corsproxy.io/?';
+// const url = 'https://';
 
 export function pingDatabase(queryFlags, onReady) {
-  let reqUrl = url + encodeURIComponent(`${ngrokUrl}/${queryFlags}`);
+  // let reqUrl = encodeURIComponent(`${ngrokUrl}/${queryFlags}`);
+  let reqUrl = `${ngrokUrl}/${queryFlags}`;
   console.log(reqUrl);
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
-      console.log("RAAA")
-      console.log(onReady)
+      // console.log("RAAA")
+      // console.log(xhttp.response)
+      // console.log(onReady)
       onReady(xhttp);
       // return xhttp.responseText;
     }
