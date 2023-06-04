@@ -40,8 +40,9 @@ function saveDatabaseToServer () {
     }); 
 }
 
-app.use(cors());
-
+app.use(
+    cors()
+);
 // Handle database querying from here
 app.get('/getentries/:query', (req, res, next) => {
     console.log("Got here");
@@ -56,7 +57,6 @@ app.get('/getentries/:query', (req, res, next) => {
     });
 
     // Send out in bulk
-    res.writeHead(200, "text/html");
     res.write(JSON.stringify(bulkArray));
     saveDatabaseToServer();
     return res.end();
