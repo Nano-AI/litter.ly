@@ -9,7 +9,7 @@ import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
+import { green, red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -23,7 +23,13 @@ import Box from '@mui/material/Box';
 import PlaceIcon from '@mui/icons-material/Place';
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 
+import Logo from '../../img/logo.png';
+
 import { SeverityScale } from "./SeverityEmoji";
+import { useTheme } from '@emotion/react';
+import EventDetails from '../EventDetails/EventDetails';
+import { Tooltip } from '@mui/material';
+import Link from '@mui/material/Link';
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -48,6 +54,49 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
+function timeSince(date) {
+
+  var seconds = Math.floor((new Date() - date) / 1000);
+
+  var interval = seconds / 31536000;
+
+  if (interval > 1) {
+    return Math.floor(interval) + " years";
+  }
+  interval = seconds / 2592000;
+  if (interval > 1) {
+    return Math.floor(interval) + " months";
+  }
+  interval = seconds / 86400;
+  if (interval > 1) {
+    return Math.floor(interval) + " days";
+  }
+  interval = seconds / 3600;
+  if (interval > 1) {
+    return Math.floor(interval) + " hours";
+  }
+  interval = seconds / 60;
+  if (interval > 1) {
+    return Math.floor(interval) + " minutes";
+  }
+  return Math.floor(seconds) + " seconds";
+}
+
+function defaultVal(p1, def) {
+  if (!p1) {
+    return def;
+  }
+  return p1;
+}
+
+function clamp(val, min, max) {
+  if (val > max)
+    return max;
+  else if (val < min)
+    return min;
+  return val;
+}
+
 export default function EventCard(props) {
   const [expanded, setExpanded] = React.useState(false);
 
@@ -55,21 +104,21 @@ export default function EventCard(props) {
     setExpanded(!expanded);
   };
 
-  var title = props.title;
-  var description = props.description;
-  var severity = props.severity;
-  var time = props.time;
-  var location = props.location;
-  var demand = props.demand;
-  let photo = props.photo;
-  let tags = props.tags;
+  var title = defaultVal(props.title, "Puget Sound Litter");
+  var description = defaultVal(props.description, "No description").replaceAll("+", " ");
+  var severity = clamp(4 - (defaultVal(props.severity, 2) - 1));
+  var time = timeSince(Date.parse(defaultVal(props.time, new Date())));
+  var location = defaultVal(props.location, "None specified");
+  var demand = defaultVal(props.demand, 0);
+  let photo = defaultVal(props.photo, Logo);
+  let tags = props.tags.length > 0 ? "#" + props.tags.replaceAll("+", "-").split(",").join(" #") : "No tags";
   let author = props.author;
 
   const severityKey = SeverityScale.features[severity];
   const SeverityEmoji = severityKey.icon;
 
   return (
-    <Grid item class="event-grid" style={{ width: "100%" }} /*xs={12} sm={6} md={8}*/>
+    <Grid item class="event-grid" style={{ width: "100%", maxWidth: "120vh" }}>
       <Card sx={{ display: 'flex' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', width: "80%" }}>
           <CardHeader
@@ -79,36 +128,40 @@ export default function EventCard(props) {
               </Avatar>
             }
             action={
-              <IconButton aria-label="settings">
-                <SeverityEmoji 
-                  style={{ color: severityKey.color, fontSize:"3rem" }}/>
-              </IconButton>
+              <Tooltip title="Relative scale of how bad it affects people." arrow>
+                <IconButton aria-label="settings">
+                  <SeverityEmoji
+                    style={{ color: severityKey.color, fontSize: "3rem" }} />
+                </IconButton>
+              </Tooltip>
             }
             title={title}
             subheader={
               <>
-              <CardActions className="card-location">
-                <PlaceIcon style={{fontSize: "1rem"}} /> {location} <AccessTimeOutlinedIcon style={{fontSize: "1rem"}} /> {time}
-              </CardActions>
+                <CardActions className="card-location">
+                  <PlaceIcon style={{ fontSize: "1rem" }} /> {location} 
+                  <AccessTimeOutlinedIcon style={{ fontSize: "1rem" }}/>
+                   {time} ago
+                </CardActions>
               </>
             }
-            titleTypographyProps={{variant:'h5' }} 
-            subheaderTypographyProps={{variant: 'body2'}}
+            titleTypographyProps={{ variant: 'h5' }}
+            subheaderTypographyProps={{ variant: 'body2' }}
           />
           <CardContent>
             <Typography variant="body1" color="text.primary">
-              { 
-              (description.length <= 400) ? description : (<>
-                {description.substring(0, 397)}...
-                <Typography color="info.main">(Click for more)</Typography>
-              </>)
-              } 
+              {
+                (description.length <= 400) ? description : (<>
+                  {description.substring(0, 397)}...
+                  <Typography color="info.main">(Click on sign up button for more)</Typography>
+                </>)
+              }
             </Typography>
             <Typography variant="body1" color="info.main">
               <b>{tags}</b>
             </Typography>
             <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
-          </Box>
+            </Box>
           </CardContent>
           <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
             <CardActions>
@@ -120,23 +173,30 @@ export default function EventCard(props) {
               </IconButton>
               <ExpandMore
                 expand={expanded}
-                onClick={handleExpandClick}
                 aria-expanded={expanded}
                 aria-label="show more"
-                onClick={() => { alert("HELPPPP") }}
               >
-                <AppRegistrationIcon />
+                <EventDetails
+                  description={description}
+                  title={title}
+                  time={time}
+                  location={location}
+                  tags={tags}
+                  photo={photo}
+                  expand={expanded}
+                />
               </ExpandMore>
             </CardActions>
           </Box>
         </Box>
 
-        <CardMedia
-          component="img"
-          sx={{ width: "20%" }}
-          image={photo}
-          alt="Live from space album cover"
-        />
+          <CardMedia
+            component="img"
+            sx={{ width: "20%" }}
+            image={photo}
+            className="card-media-image"
+          // alt="Live from space album cover"
+          />
       </Card>
     </Grid>
   );

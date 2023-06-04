@@ -9,3 +9,10 @@
 .card-location {
   padding: 0 !important;
 }
+
+.card-media-image {
+  /* object-fit: contain !important; */
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
