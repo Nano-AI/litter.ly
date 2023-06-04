@@ -19,70 +19,10 @@ TAFFY = require('taffy');
 
 // Severity is on a scale of 1-5
 var pollutionDatabase = TAFFY(JSON.parse(fs.readFileSync('db.json')));
-/*var pollutionDatabase = TAFFY([
-    { 
-        "description"  : "VERY SEVERE TRASH IN SEATTLE.",
-        "severity"  : "5",
-        "date-reported" : new Date(),
-        "location" : "Seattle",
-        "demand" : "HIGH",
-        "author" : "Berk",
-        "background-color" : "#00ffff",
-        "photo-url" : "https://37e7-63-208-141-34.ngrok-free.app/img/trash1.jpg",
-        "tags" : "Pollution",
-        "partOfDB" : "true"
-    },
-    { 
-        "description"  : "BUNCH OF GARBAGE IN SEATTLE.",
-        "severity"  : "5",
-        "date-reported" : new Date(),
-        "location" : "Seattle",
-        "demand" : "HIGH",
-        "author" : "Berk",
-        "background-color" : "#00ffff",
-        "photo-url" : "https://37e7-63-208-141-34.ngrok-free.app/img/trash2.jpg",
-        "tags" : "Pollution",
-        "partOfDB" : "true"
-    },
-    { 
-        "description"  : "CLEANUP ON AISLE 5 IN SANFRANCISCO.",
-        "severity"  : "5",
-        "date-reported" : new Date(),
-        "location" : "SanFrancisco",
-        "demand" : "HIGH",
-        "author" : "Berk",
-        "background-color" : "#00ffff",
-        "photo-url" : "https://37e7-63-208-141-34.ngrok-free.app/img/trash3.jpg",
-        "tags" : "Pollution",
-        "partOfDB" : "true"
-    },
-    { 
-        "description"  : "TERRIBLE WASTE IN ISSAQUAH.",
-        "severity"  : "3",
-        "date-reported" : new Date(),
-        "location" : "Issaquah",
-        "demand" : "HIGH",
-        "author" : "Berk",
-        "background-color" : "#00ffff",
-        "photo-url" : "https://37e7-63-208-141-34.ngrok-free.app/img/trash4.jpg",
-        "tags" : "Pollution",
-        "partOfDB" : "true"
-    },
-    { 
-        "description"  : "EVEN MORE TRASH IN SAN FRANCISCO.",
-        "severity"  : "4",
-        "date-reported" : new Date(),
-        "location" : "SanFrancisco",
-        "demand" : "HIGH",
-        "author" : "Berk",
-        "background-color" : "#00ffff",
-        "photo-url" : "https://37e7-63-208-141-34.ngrok-free.app/img/trash5.jpg",
-        "tags" : "Pollution",
-        "partOfDB" : "true"
-    },
-]);*/
+
 
 // ___id
+// Save all TAFFY DB data to local db file
 function saveDatabaseToServer () {
     let queryObject = queryHandler.constructQueryObject("partOfDB=true");
 
