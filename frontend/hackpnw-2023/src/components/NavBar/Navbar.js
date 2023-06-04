@@ -16,7 +16,7 @@ import "./NavBar.css"
 
 import {ReactComponent as AdbIcon} from "../../logo2.svg";
 
-const pages = ['Products', 'Pricing', 'Blog'];
+const pages = [];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function NavBar() {
