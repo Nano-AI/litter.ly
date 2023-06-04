@@ -107,7 +107,12 @@ app.get('/img/:filename', (req, res) => {
     queryHandler.handleFile(req, res, "./img/");
 });
 
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 
-app.listen(3000, () => {
-    console.log("Deploying HACKPNW application server on port 3000...");
+app.listen(8080, () => {
+    console.log("Deploying HACKPNW application server on port 8080...");
 });
