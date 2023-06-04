@@ -20,6 +20,8 @@ import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import PlaceIcon from '@mui/icons-material/Place';
+import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 
 import { SeverityScale } from "./SeverityEmoji";
 
@@ -83,9 +85,15 @@ export default function EventCard(props) {
               </IconButton>
             }
             title={title}
-            subheader={time}
+            subheader={
+              <>
+              <CardActions className="card-location">
+                <PlaceIcon style={{fontSize: "1rem"}} /> {location} <AccessTimeOutlinedIcon style={{fontSize: "1rem"}} /> {time}
+              </CardActions>
+              </>
+            }
             titleTypographyProps={{variant:'h5' }} 
-            subheaderTypographyProps={{variant: 'body1'}}
+            subheaderTypographyProps={{variant: 'body2'}}
           />
           <CardContent>
             <Typography variant="body1" color="text.primary">
@@ -99,6 +107,8 @@ export default function EventCard(props) {
             <Typography variant="body1" color="info.main">
               <b>{tags}</b>
             </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
+          </Box>
           </CardContent>
           <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
             <CardActions>
@@ -121,11 +131,10 @@ export default function EventCard(props) {
           </Box>
         </Box>
 
-
         <CardMedia
           component="img"
           sx={{ width: "20%" }}
-          image="https://nypost.com/wp-content/uploads/sites/2/2018/08/trashing-trash.jpg?quality=75&strip=all"
+          image={photo}
           alt="Live from space album cover"
         />
       </Card>
