@@ -1,3 +1,13 @@
 #navbar {
   margin-bottom: 2rem; 
 }
+
+.max-height {
+  height: 100%;
+  max-height: 10% !important;
+}
+
+svg {
+  height: 48px !important;
+  margin: 0;
+}
