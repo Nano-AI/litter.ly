@@ -2,9 +2,10 @@ import { ThemeProvider } from '@emotion/react';
 import './App.css';
 import EventGroup from './components/EventGroup/EventGroup';
 import NavBar from './components/NavBar/Navbar';
+
 import { createTheme } from '@mui/material/styles';
 
-const theme = createTheme({
+const Theme = createTheme({
   palette: {
     primary: {
       main: "#35a02a",
@@ -17,9 +18,9 @@ const theme = createTheme({
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={Theme}>
       <div className="App">
-        <NavBar />
+        <NavBar theme={Theme} />
         <EventGroup /> 
       </div>
     </ThemeProvider>
