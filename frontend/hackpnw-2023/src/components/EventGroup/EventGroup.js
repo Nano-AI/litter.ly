@@ -7,35 +7,43 @@ import Container from '@mui/material/Container';
 import React, { useState } from 'react';
 import "./EventGroup.css";
 
+const ngrokUrl = "https://49a4-216-9-29-196.ngrok-free.app";
+const safeUrl = "https:--49a4-216-9-29-196.ngrok-free.app";
+const url = 'https://corsproxy.io/?';
+
+function pingDatabase (queryFlags) {
+  let reqUrl = url + encodeURIComponent(`${ngrokUrl}/${queryFlags}`);
+  console.log(reqUrl);
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+          return xhttp.responseText;
+      }
+  };
+  xhttp.open("GET", reqUrl, true);
+  xhttp.setRequestHeader("ngrok-skip-browser-warning", "true");
+  xhttp.send();
+}
+
+function getAllEntries (queryFlags) {
+  return pingDatabase(`getentries/${queryFlags}`);
+}
+
+function insertEntry (queryFlags) {
+  return pingDatabase(`insertdb/${queryFlags}`);
+}
+
+function selectEntries (queryKey, querySelection) {
+  return pingDatabase(`selectdb/${queryKey}/${querySelection}`);
+}
+
+function updateEntries (updateQuery, querySelection) {
+  return pingDatabase(`updatedb/${updateQuery}/${querySelection}`);
+}
 
 function EventCardHolder() {
 
   const [state, setState] = React.useState({ data: null });
-
-  let url = "https://95f7-216-9-29-203.ngrok-free.app/";
-
-  // const xhr = new XMLHttpRequest();
-  // const post = url + "getentries/partOfDB=true";
-  // xhr.open("GET", post);
-  // xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-  // xhr.send();
-  // console.log(xhr.response);
-  const options = {
-    method: 'GET',    
-    withCredentials: true, 
-    crossorigin: false,  
-    headers: new Headers({'content-type': 'text/html'}),
-  };
-  
-  if (state.data == null) {
-   fetch(url + "getentries/partOfDB=true", options)
-     .then(r => {console.log(r); r.json()})
-     .then(data => {
-       console.log("Data", data)
-         setState({ data: data });
-     }).catch(e => {console.log(e)});
-    }
-  console.log(state.data);
 
   return (
     <div>
