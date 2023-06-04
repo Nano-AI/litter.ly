@@ -10,6 +10,7 @@ import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import PlaceIcon from '@mui/icons-material/Place';
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 
+import Logo from '../../img/logo.png';
 import * as Database from "../../api/Database";
 
 import "./EventDetails.css";
@@ -44,17 +45,69 @@ function timeSince(date) {
   return Math.floor(seconds) + " seconds";
 }
 
+function defaultVal(p1, def) {
+  if (!p1) {
+    return def;
+  }
+  return p1;
+}
+
+function clamp(val, min, max) {
+  if (val > max)
+    return max;
+  else if (val < min)
+    return min;
+  return val;
+}
+
 export default function EventDetails(props) {
   const [open, setOpen] = React.useState(false);
   const [scroll, setScroll] = React.useState('paper');
   const [data, setData] = React.useState({
-    description: "",
-    title: "",
+    description: null,
+    title: null,
     time: new Date(),
-    location: "",
-    tags: "",
-    photo: ""
+    location: null,
+    tags: null,
+    photo: null
   });
+
+  var id = useParams()['id'];
+  if (!data.title) {
+    if (id) {
+      Database.getAllEntries("___id=" + id, (d) => {
+        let data = JSON.parse(d.response)[0];
+        var title = defaultVal(data.title, "Puget Sound Litter");
+        var description = defaultVal(data.description, "No description").replaceAll("+", " ");
+        var severity = clamp(4 - (defaultVal(data.severity, 2) - 1));
+        var time = timeSince(Date.parse(defaultVal(data.time, new Date())));
+        var location = defaultVal(data.location, "None specified");
+        var demand = defaultVal(data.demand, 0);
+        let photo = defaultVal(data.photo, Logo);
+        let tags = data.tags.length > 0 ? "#" + data.tags.replaceAll("+", "-").split(",").join(" #") : "No tags";
+        let author = data.author;
+
+
+        setData({
+          description: description,
+          title: title,
+          time: time,
+          location: location,
+          tags: tags,
+          photo: photo
+        });
+      });
+    } else {
+      setData({
+        description: props.description,
+        title: props.title,
+        time: props.time,
+        location: props.location,
+        tags: props.tags,
+        photo: props.photo
+      });
+    }
+  }
 
   if (props.expanded) {
     setOpen(true);
@@ -81,36 +134,8 @@ export default function EventDetails(props) {
   }, [open]);
 
 
-  var id = useParams()['id'];
 
-  if (!data.title) {
-    if (id) {
 
-    } else {
-      setData({
-        description: props.description,
-        title: props.title,
-        time: props.time,
-        location: props.location,
-        tags: props.tags,
-        photo: props.photo
-      });
-    }
-  }
-  if (id && !data) {
-    Database.getAllEntries("___id=" + id, (d) => {
-      console.log(d);
-    });
-  } else if (!data) {
-    setData({
-      description: props.description,
-      title: props.title,
-      time: props.time,
-      location: props.location,
-      tags: props.tags,
-      photo: props.photo
-    });
-  }
 
   var title = data.title;
   var time = data.time;
