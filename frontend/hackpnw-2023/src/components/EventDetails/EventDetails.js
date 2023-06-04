@@ -73,6 +73,7 @@ export default function EventDetails(props) {
   });
 
   var id = useParams()['id'];
+
   if (!data.title) {
     if (id) {
       Database.getAllEntries("___id=" + id, (d) => {
@@ -86,8 +87,8 @@ export default function EventDetails(props) {
         let photo = defaultVal(data.photo, Logo);
         let tags = data.tags.length > 0 ? "#" + data.tags.replaceAll("+", "-").split(",").join(" #") : "No tags";
         let author = data.author;
-
-
+        
+        setOpen(true);
         setData({
           description: description,
           title: title,
@@ -122,7 +123,6 @@ export default function EventDetails(props) {
   const handleClose = () => {
     setOpen(false);
   };
-
   const descriptionElementRef = React.useRef(null);
   React.useEffect(() => {
     if (open) {
@@ -132,10 +132,6 @@ export default function EventDetails(props) {
       }
     }
   }, [open]);
-
-
-
-
 
   var title = data.title;
   var time = data.time;
