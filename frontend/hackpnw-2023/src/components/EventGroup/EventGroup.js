@@ -8,50 +8,82 @@ import Container from '@mui/material/Container';
 import React, { useState } from 'react';
 import "./EventGroup.css";
 
+const ngrokUrl = "https://49a4-216-9-29-196.ngrok-free.app";
+const safeUrl = "https:--49a4-216-9-29-196.ngrok-free.app";
+const url = 'https://corsproxy.io/?';
+
+function pingDatabase(queryFlags, onReady) {
+  let reqUrl = url + encodeURIComponent(`${ngrokUrl}/${queryFlags}`);
+  console.log(reqUrl);
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      console.log("RAAA")
+      console.log(onReady)
+      onReady(xhttp);
+      // return xhttp.responseText;
+    }
+  };
+  xhttp.open("GET", reqUrl, true);
+  xhttp.setRequestHeader("ngrok-skip-browser-warning", "true");
+  xhttp.send();
+}
+
+function getAllEntries(queryFlags, onReady) {
+  return pingDatabase(`getentries/${queryFlags}`, onReady);
+}
+
+function insertEntry(queryFlags, onReady) {
+  return pingDatabase(`insertdb/${queryFlags}`, onReady);
+}
+
+function selectEntries(queryKey, querySelection, onReady) {
+  return pingDatabase(`selectdb/${queryKey}/${querySelection}`, onReady);
+}
+
+function updateEntries(updateQuery, querySelection, onReady) {
+  return pingDatabase(`updatedb/${updateQuery}/${querySelection}`, onReady);
+}
 
 function EventCardHolder() {
 
   const [state, setState] = React.useState({ data: null });
 
-  let url = "https://37e7-63-208-141-34.ngrok-free.app/";
-
-  // const xhr = new XMLHttpRequest();
-  // const post = url + "getentries/partOfDB=true";
-  // xhr.open("GET", post);
-  // xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-  // xhr.send();
-  // console.log(xhr.response);
-  const options = {
-    method: 'GET',    
-    withCredentials: true,    
-    crossorigin: true,  
-    headers: new Headers({'content-type': 'application/json'}),
-    mode: 'no-cors'
-  };
-  
-  // if (state.data == null) {
-  //  fetch(url + "getentries/partOfDB=true", options)
-  //    .then(r => {console.log(r); r.json()})
-  //    .then(data => {
-  //      console.log("Data", data)
-  //        setState({ data: data });
-  //    }).catch(e => {console.log(e)});
-  //   }
-  // console.log(state.data);
+  if (!state.data) {
+    getAllEntries("partOfDB=true", (data) => {
+      setState({ data: JSON.parse(data.response) });
+    })
+  }
 
   return (
     <div>
-    <Container>
-      <Grid
-        container
-        spacing={2}
-        direction="row"
-        justify="flex-start"
-        alignItems="flex-start"
-      >
-        <EventCard severity={4} tags="#survivng #jkwerealldyingofpollution" author="test" title="Testing" description="Testingasdf asdfasdfasdfasdfasd" time="July 1st, 2023, 5am" />
-      </Grid>
-    </Container>
+      <Container>
+        <Grid
+          container
+          spacing={2}
+          direction="row"
+          justify="flex-start"
+          alignItems="flex-start"
+        >
+          {state.data ? state.data.map((e) => {
+            console.log("TSTEST")
+            console.log(e)
+            return (
+              <EventCard
+                severity={e['severity']}
+                tags={e['tags']}
+                photo={e['photo-url']}
+                title={e['title']}
+                description={e['description']}
+                time={e['date-reported']}
+                location={e['location']}
+                demand={e['demand']}
+                author={e['author']}
+              />
+            );
+          }) : <></>}
+        </Grid>
+      </Container>
     </div>
   );
 }
