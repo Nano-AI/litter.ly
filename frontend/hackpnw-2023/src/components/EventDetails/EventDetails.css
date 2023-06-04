@@ -2,3 +2,14 @@ div:has(#scroll-dialog-title) {
   width: 100%;
   background-color: aqua;
 }
+
+.background-details {
+  background-repeat: none;
+  background-size: cover;
+  /* box-shadow: inset 0 0 0 100% rgba(0, 0, 0, 0.5); */
+}
+
+.detail-image {
+  text-align: right;
+  float: right;
+}

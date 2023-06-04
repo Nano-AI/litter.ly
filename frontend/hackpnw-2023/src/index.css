@@ -12,6 +12,10 @@ code {
     monospace;
 }
 
+p {
+  overflow-wrap: break-word !important;
+}
+
 #root {
   overflow: auto;
   background-image: url("./img/background.jpg");

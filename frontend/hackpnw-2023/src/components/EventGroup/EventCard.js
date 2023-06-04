@@ -28,6 +28,8 @@ import Logo from '../../img/logo.png';
 import { SeverityScale } from "./SeverityEmoji";
 import { useTheme } from '@emotion/react';
 import EventDetails from '../EventDetails/EventDetails';
+import { Tooltip } from '@mui/material';
+import Link from '@mui/material/Link';
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -103,20 +105,20 @@ export default function EventCard(props) {
   };
 
   var title = defaultVal(props.title, "Puget Sound Litter");
-  var description = defaultVal(props.description, "No description");
+  var description = defaultVal(props.description, "No description").replaceAll("+", " ");
   var severity = clamp(4 - (defaultVal(props.severity, 2) - 1));
   var time = timeSince(Date.parse(defaultVal(props.time, new Date())));
   var location = defaultVal(props.location, "None specified");
   var demand = defaultVal(props.demand, 0);
   let photo = defaultVal(props.photo, Logo);
-  let tags = props.tags.length > 0 ? "#" + props.tags.split(",").join(" #") : "No tags";
+  let tags = props.tags.length > 0 ? "#" + props.tags.replaceAll("+", "-").split(",").join(" #") : "No tags";
   let author = props.author;
 
   const severityKey = SeverityScale.features[severity];
   const SeverityEmoji = severityKey.icon;
 
   return (
-    <Grid item class="event-grid" style={{ width: "100%" }}>
+    <Grid item class="event-grid" style={{ width: "100%", maxWidth: "120vh" }}>
       <Card sx={{ display: 'flex' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', width: "80%" }}>
           <CardHeader
@@ -126,10 +128,12 @@ export default function EventCard(props) {
               </Avatar>
             }
             action={
-              <IconButton aria-label="settings">
-                <SeverityEmoji
-                  style={{ color: severityKey.color, fontSize: "3rem" }} />
-              </IconButton>
+              <Tooltip title="Relative scale of how bad it affects people." arrow>
+                <IconButton aria-label="settings">
+                  <SeverityEmoji
+                    style={{ color: severityKey.color, fontSize: "3rem" }} />
+                </IconButton>
+              </Tooltip>
             }
             title={title}
             subheader={
@@ -149,7 +153,7 @@ export default function EventCard(props) {
               {
                 (description.length <= 400) ? description : (<>
                   {description.substring(0, 397)}...
-                  <Typography color="info.main">(Click for more)</Typography>
+                  <Typography color="info.main">(Click on sign up button for more)</Typography>
                 </>)
               }
             </Typography>
@@ -169,7 +173,6 @@ export default function EventCard(props) {
               </IconButton>
               <ExpandMore
                 expand={expanded}
-                onClick={handleExpandClick}
                 aria-expanded={expanded}
                 aria-label="show more"
               >
@@ -179,6 +182,8 @@ export default function EventCard(props) {
                   time={time}
                   location={location}
                   tags={tags}
+                  photo={photo}
+                  expand={expanded}
                 />
               </ExpandMore>
             </CardActions>
