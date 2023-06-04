@@ -1,4 +1,3 @@
-import CardGroup from 'react-bootstrap/CardGroup';
 import EventCard from './EventCard';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -13,7 +12,7 @@ function EventCardHolder() {
 
   const [state, setState] = React.useState({ data: null });
 
-  let url = "https://37e7-63-208-141-34.ngrok-free.app/";
+  let url = "https://14ef-216-9-29-203.ngrok-free.app/";
 
   // const xhr = new XMLHttpRequest();
   // const post = url + "getentries/partOfDB=true";
@@ -23,20 +22,19 @@ function EventCardHolder() {
   // console.log(xhr.response);
   const options = {
     method: 'GET',    
-    withCredentials: true,    
+    withCredentials: true, 
     crossorigin: true,  
     headers: new Headers({'content-type': 'application/json'}),
-    mode: 'no-cors'
   };
   
-  // if (data == null {
-  //  fetch(url + "getentries/partOfDB=true", options)
-  //    .then(r => {console.log(r); r.json()})
-  //    .then(data => {
-  //      console.log("Data", data)
-  //        setState({ data: data });
-  //    }).catch(e => {console.log(e)});
-  //   }
+  if (state.data == null) {
+   fetch(url + "getentries/partOfDB=true", options)
+     .then(r => {console.log(r); r.json()})
+     .then(data => {
+       console.log("Data", data)
+         setState({ data: data });
+     }).catch(e => {console.log(e)});
+    }
   console.log(state.data);
 
   return (
