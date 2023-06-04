@@ -4,6 +4,8 @@ const fs = require('fs')
 const app = express();
 const queryHandler = require('./queryHandling');
 const { raw } = require('body-parser');
+const cors = require('cors');
+
 TAFFY = require('taffy');
 
 /*
@@ -107,6 +109,7 @@ app.get('/img/:filename', (req, res) => {
     queryHandler.handleFile(req, res, "./img/");
 });
 
+app.use(cors());
 
 app.listen(3000, () => {
     console.log("Deploying HACKPNW application server on port 3000...");
