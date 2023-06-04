@@ -21,6 +21,8 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 
+import { SeverityScale } from "./SeverityEmoji";
+
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
 }
@@ -61,6 +63,9 @@ export default function EventCard(props) {
   let tags = props.tags;
   let author = props.author;
 
+  const severityKey = SeverityScale.features[severity];
+  const SeverityEmoji = severityKey.icon;
+
   return (
     <Grid item class="event-grid" style={{ width: "100%" }} /*xs={12} sm={6} md={8}*/>
       <Card sx={{ display: 'flex' }}>
@@ -73,7 +78,8 @@ export default function EventCard(props) {
             }
             action={
               <IconButton aria-label="settings">
-                <MoreVertIcon />
+                <SeverityEmoji 
+                  style={{ color: severityKey.color, fontSize:"3rem" }}/>
               </IconButton>
             }
             title={title}
@@ -83,10 +89,15 @@ export default function EventCard(props) {
           />
           <CardContent>
             <Typography variant="body1" color="text.primary">
-              {description}
+              { 
+              (description.length <= 400) ? description : (<>
+                {description.substring(0, 397)}...
+                <Typography color="info.main">(Click for more)</Typography>
+              </>)
+              } 
             </Typography>
             <Typography variant="body1" color="info.main">
-              {tags}
+              <b>{tags}</b>
             </Typography>
           </CardContent>
           <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
@@ -109,6 +120,8 @@ export default function EventCard(props) {
             </CardActions>
           </Box>
         </Box>
+
+
         <CardMedia
           component="img"
           sx={{ width: "20%" }}
