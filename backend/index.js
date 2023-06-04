@@ -51,6 +51,11 @@ app.get('/getentries/:query', (req, res) => {
         bulkArray.push(item);
     });
 
+    res.setHeader('Access-Control-Allow-Origin', `https://14ef-216-9-29-203.ngrok-free.app/getentries/partOfDB=true`);
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
     // Send out in bulk
     res.write(JSON.stringify(bulkArray));
     saveDatabaseToServer();
