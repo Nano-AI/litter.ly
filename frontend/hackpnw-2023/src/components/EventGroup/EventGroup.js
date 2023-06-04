@@ -43,6 +43,7 @@ function EventCardHolder() {
                 location={e['location']}
                 demand={e['demand']}
                 author={e['author']}
+                id={e['___id']}
               />
             );
           }) : <></>}

@@ -22,6 +22,7 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import PlaceIcon from '@mui/icons-material/Place';
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 
 import Logo from '../../img/logo.png';
 
@@ -30,6 +31,8 @@ import { useTheme } from '@emotion/react';
 import EventDetails from '../EventDetails/EventDetails';
 import { Tooltip } from '@mui/material';
 import Link from '@mui/material/Link';
+
+import * as Database from "../../api/Database";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -104,6 +107,17 @@ export default function EventCard(props) {
     setExpanded(!expanded);
   };
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleTooltipClose = () => {
+    setOpen(false);
+  };
+
+  const handleTooltipOpen = () => {
+    navigator.clipboard.writeText(window.location.href + "id/" + id);
+    setOpen(true);
+  };
+
   var title = defaultVal(props.title, "Puget Sound Litter");
   var description = defaultVal(props.description, "No description").replaceAll("+", " ");
   var severity = clamp(4 - (defaultVal(props.severity, 2) - 1));
@@ -113,6 +127,7 @@ export default function EventCard(props) {
   let photo = defaultVal(props.photo, Logo);
   let tags = props.tags.length > 0 ? "#" + props.tags.replaceAll("+", "-").split(",").join(" #") : "No tags";
   let author = props.author;
+  let id = props.id;
 
   const severityKey = SeverityScale.features[severity];
   const SeverityEmoji = severityKey.icon;
@@ -139,9 +154,9 @@ export default function EventCard(props) {
             subheader={
               <>
                 <CardActions className="card-location">
-                  <PlaceIcon style={{ fontSize: "1rem" }} /> {location} 
-                  <AccessTimeOutlinedIcon style={{ fontSize: "1rem" }}/>
-                   {time} ago
+                  <PlaceIcon style={{ fontSize: "1rem" }} /> {location}
+                  <AccessTimeOutlinedIcon style={{ fontSize: "1rem" }} />
+                  {time} ago
                 </CardActions>
               </>
             }
@@ -168,9 +183,26 @@ export default function EventCard(props) {
               <IconButton aria-label="add to favorites">
                 <FavoriteIcon />
               </IconButton>
-              <IconButton aria-label="share">
-                <ShareIcon />
-              </IconButton>
+
+              <ClickAwayListener onClickAway={handleTooltipClose}>
+                <Tooltip
+                  PopperProps={{
+                    disablePortal: true,
+                  }}
+                  onClose={handleTooltipClose}
+                  open={open}
+                  disableFocusListener
+                  disableHoverListener
+                  disableTouchListener
+                  title="Copied to Clipboard!"
+                >
+                  <Button onClick={handleTooltipOpen}>
+                    <ShareIcon />
+                  </Button>
+                </Tooltip>
+              </ClickAwayListener>
+
+
               <ExpandMore
                 expand={expanded}
                 aria-expanded={expanded}
@@ -190,13 +222,13 @@ export default function EventCard(props) {
           </Box>
         </Box>
 
-          <CardMedia
-            component="img"
-            sx={{ width: "20%" }}
-            image={photo}
-            className="card-media-image"
-          // alt="Live from space album cover"
-          />
+        <CardMedia
+          component="img"
+          sx={{ width: "20%" }}
+          image={photo}
+          className="card-media-image"
+        // alt="Live from space album cover"
+        />
       </Card>
     </Grid>
   );

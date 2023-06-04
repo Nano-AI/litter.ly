@@ -14,9 +14,13 @@ import Container from '@mui/material/Container';
 
 import './SignupDetails.css';
 
-export default function SignupDetails(props) {
-  let handleSubmit = () => {
+import * as Database from "../../api/Database";
 
+export default function SignupDetails(props) {
+  console.log("inig plese")
+  console.log(props.demand)
+  let handleSubmit = () => {
+    Database.updateEntries(`demand=${props.demand + 1}/___id=${props.id}`, () => {}); 
   };
   return (
       <Container component="main" maxWidth="xs" id="testing">

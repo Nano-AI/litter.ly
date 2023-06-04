@@ -69,11 +69,13 @@ export default function EventDetails(props) {
     time: new Date(),
     location: null,
     tags: null,
-    photo: null
+    photo: null,
+    demand: null
   });
 
   var id = useParams()['id'];
 
+  // WHOLE SECTION IS REDUNDNAT BUT IT CAN BE FIXEDLATER
   if (!data.title) {
     if (id) {
       Database.getAllEntries("___id=" + id, (d) => {
@@ -95,7 +97,8 @@ export default function EventDetails(props) {
           time: time,
           location: location,
           tags: tags,
-          photo: photo
+          photo: photo,
+          demand: demand
         });
       });
     } else {
@@ -105,7 +108,8 @@ export default function EventDetails(props) {
         time: props.time,
         location: props.location,
         tags: props.tags,
-        photo: props.photo
+        photo: props.photo,
+        demand: props.demand
       });
     }
   }
@@ -123,6 +127,7 @@ export default function EventDetails(props) {
   const handleClose = () => {
     setOpen(false);
   };
+
   const descriptionElementRef = React.useRef(null);
   React.useEffect(() => {
     if (open) {
@@ -139,6 +144,7 @@ export default function EventDetails(props) {
   var tags = data.tags;
   var description = data.description;
   var photo = data.photo;
+  var demand = data.demand;
 
   return (
     <div>
@@ -185,7 +191,9 @@ export default function EventDetails(props) {
               {description}
             </Typography>
 
-            <SignupDetails id="lmaooo" background={photo} style={{ backgroundImage: `url(${photo})`, width: "100%" }} />
+            <SignupDetails
+              demands={demand}
+             id="lmaooo" background={photo} style={{ backgroundImage: `url(${photo})`, width: "100%" }} />
           </DialogContentText>
         </DialogContent>
         <DialogActions>
