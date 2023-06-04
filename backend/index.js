@@ -79,7 +79,7 @@ app.get('/insertdb/:query', (req, res) => {
     res.end();
 });
 
-// SELECTION is the filtering, GETTING is the actual data you want and shit
+// SELECTION is the filtering, GETTING is the actual data you want
 app.get('/selectdb/:key/:selectionquery', (req, res) => {
     let rawSelectionQuery = req.params.selectionquery;
 
@@ -100,7 +100,6 @@ app.get('/selectdb/:key/:selectionquery', (req, res) => {
 
 // SELECTION is the filtering, SETTING is the variables you want to set!
 app.get('/updatedb/:setquery/:selectionquery', (req, res) => {
-    cors();
     let rawSetQuery = req.params.setquery;
     let rawSelectionQuery = req.params.selectionquery;
 
@@ -119,6 +118,17 @@ app.get('/img/:filename', (req, res) => {
     queryHandler.handleFile(req, res, "./img/");
 });
 
+app.get('/littermap', (req, res) => {
+    const options = {
+        root: path.join("./")
+    };
+
+    res.sendFile("map-index.html", options, (err) => {
+        if (err) {
+            console.log("FILE SENDING ERROR: " + err);
+        }
+    });
+});
 //app.use(cors());
 
 app.listen(8080, () => {

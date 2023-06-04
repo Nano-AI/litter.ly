@@ -2,16 +2,18 @@ const path = require('path');
 
 var defaultEntry = { 
     "description"  : "Sample description.",
-    "severity"  : "0",
+    "title" : "Puget Sound Litter",
+    "severity" : "0",
     "date-reported" : new Date(),
     "location" : "Location.",
-    "demand" : "Demand.",
+    "lat-long": "47.6062$-122.3321",
+    "demand" : "0",
     "author" : "Berk",
     "background-color" : "#00ffff",
-    "photo-url" : "https://37e7-63-208-141-34.ngrok-free.app/img/trash1.jpg",
-    "tags" : "Pollution",
+    "photo-url" : "https://st4.depositphotos.com/3936111/22462/i/600/depositphotos_224622178-stock-photo-piles-garbage-streets-due-fulls.jpg",
+    "tags" : "pollution,pugetsound,help",
     "partOfDB" : "true"
-}
+};
 
 // Join provided path directory with the path variable, send the file to client
 function handleFile (req, res, pathDir) {
