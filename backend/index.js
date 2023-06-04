@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const fs = require('fs')
 const app = express();
+var cors = require('cors');
 const queryHandler = require('./queryHandling');
 const { raw } = require('body-parser');
 TAFFY = require('taffy');
@@ -39,8 +40,11 @@ function saveDatabaseToServer () {
     }); 
 }
 
+app.use(cors());
+
 // Handle database querying from here
-app.get('/getentries/:query', (req, res) => {
+app.get('/getentries/:query', (req, res, next) => {
+    console.log("Got here");
     let rawQuery = req.params.query;
     let queryObject = queryHandler.constructQueryObject(rawQuery);
 
@@ -51,15 +55,11 @@ app.get('/getentries/:query', (req, res) => {
         bulkArray.push(item);
     });
 
-    res.setHeader('Access-Control-Allow-Origin', `https://14ef-216-9-29-203.ngrok-free.app/getentries/partOfDB=true`);
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-    res.setHeader('Access-Control-Allow-Credentials', true);
-
     // Send out in bulk
+    res.writeHead(200, "text/html");
     res.write(JSON.stringify(bulkArray));
     saveDatabaseToServer();
-    res.end();
+    return res.end();
 });
 
 // Handle insertion / data setting requests from the server
@@ -94,6 +94,7 @@ app.get('/selectdb/:key/:selectionquery', (req, res) => {
 
 // SELECTION is the filtering, SETTING is the variables you want to set!
 app.get('/updatedb/:setquery/:selectionquery', (req, res) => {
+    cors();
     let rawSetQuery = req.params.setquery;
     let rawSelectionQuery = req.params.selectionquery;
 
@@ -112,11 +113,7 @@ app.get('/img/:filename', (req, res) => {
     queryHandler.handleFile(req, res, "./img/");
 });
 
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-  });
+//app.use(cors());
 
 app.listen(8080, () => {
     console.log("Deploying HACKPNW application server on port 8080...");
