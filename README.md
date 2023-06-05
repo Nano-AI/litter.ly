@@ -46,8 +46,8 @@
 ## About The Project
 
 <img src="https://github.com/Nano-AI/HackPNW-2023/blob/master/img/Screenshot%202023-06-04%20135309.png?raw=true">
-<img src="https://github.com/Nano-AI/HackPNW-2023/blob/master/img/mapcapture2.png?raw=true">
-<img src="https://github.com/Nano-AI/HackPNW-2023/blob/master/img/mapcapture1.png?raw=true">
+<img src="https://github.com/Nano-AI/HackPNW-2023/blob/master/img/mapcapture2.PNG?raw=true">
+<img src="https://github.com/Nano-AI/HackPNW-2023/blob/master/img/mapcapture1.PNG?raw=true">
 
 
 A social media platform meant to make it easier to organize and promote events driven to help clean the community.
