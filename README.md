@@ -44,14 +44,13 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
+<p align="left"><a href="https://devpost.com/software/litter-ly">Check it out here on Devpost!</a></p>
 <img src="https://github.com/Nano-AI/HackPNW-2023/blob/master/img/Screenshot%202023-06-04%20135309.png?raw=true">
 <img src="https://github.com/Nano-AI/HackPNW-2023/blob/master/img/mapcapture2.PNG?raw=true">
 <img src="https://github.com/Nano-AI/HackPNW-2023/blob/master/img/mapcapture1.PNG?raw=true">
 
 
 A social media platform meant to make it easier to organize and promote events driven to help clean the community.
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
