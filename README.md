@@ -72,29 +72,13 @@ A social media platform meant to make it easier to organize and promote events d
 
 Install [Node.JS](https://nodejs.org/en/download), and make sure it's added to path.
 
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-* npm
+### Installation 
+  Clone the repo, and npm install the appropriate packages.
   ```sh
-  npm install npm@latest -g
+  git clone https://github.com/Nano-AI/HackPNW-2023.git
+  cd backend && npm i
+  cd frontend/hackpnw-2023 && npm i
   ```
-
-### Installation
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/github_username/repo_name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -103,10 +87,7 @@ This is an example of how to list things you need to use the software and how to
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
+Have two separate terminal prompts open
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
