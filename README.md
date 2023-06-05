@@ -45,6 +45,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 <p align="left"><a href="https://devpost.com/software/litter-ly">Check it out here on Devpost!</a></p>
+<img src="https://github.com/Nano-AI/HackPNW-2023/blob/master/img/Screenshot%202023-06-04%20135335.png?raw=true">
 <img src="https://github.com/Nano-AI/HackPNW-2023/blob/master/img/Screenshot%202023-06-04%20135309.png?raw=true">
 <img src="https://github.com/Nano-AI/HackPNW-2023/blob/master/img/mapcapture2.PNG?raw=true">
 <img src="https://github.com/Nano-AI/HackPNW-2023/blob/master/img/mapcapture1.PNG?raw=true">
