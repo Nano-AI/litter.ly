@@ -82,7 +82,7 @@ Install [Node.JS](https://nodejs.org/en/download), and make sure it's added to p
   cd frontend/hackpnw-2023 && npm i
   ```
 
-> If the program is being tested, go to `about:config` (for FireFox), and set `security.fileuri.strict_origin_policy` to `false`. 
+> If the program is being tested, go to `about:config` (for FireFox), and set `security.fileuri.strict_origin_policy` to `false` to disable any CORS errors. 
 
 Then, go to `HackPNW-2023/frontend/hackpnw-2023/src/api/Database.js`, and change the `ngrock_url` variable to the url if your API (the code setup in `/backend`).
 
