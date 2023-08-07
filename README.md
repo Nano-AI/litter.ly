@@ -45,6 +45,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 <p align="left"><a href="https://devpost.com/software/litter-ly">Check it out here on Devpost!</a></p>
+<img src="https://github.com/Nano-AI/HackPNW-2023/blob/master/img/Screenshot%202023-06-04%20135335.png?raw=true">
 <img src="https://github.com/Nano-AI/HackPNW-2023/blob/master/img/Screenshot%202023-06-04%20135309.png?raw=true">
 <img src="https://github.com/Nano-AI/HackPNW-2023/blob/master/img/mapcapture2.PNG?raw=true">
 <img src="https://github.com/Nano-AI/HackPNW-2023/blob/master/img/mapcapture1.PNG?raw=true">
@@ -73,29 +74,17 @@ A social media platform meant to make it easier to organize and promote events d
 
 Install [Node.JS](https://nodejs.org/en/download), and make sure it's added to path.
 
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-* npm
+### Installation 
+  Clone the repo, and npm install the appropriate packages.
   ```sh
-  npm install npm@latest -g
+  git clone https://github.com/Nano-AI/HackPNW-2023.git
+  cd backend && npm i
+  cd frontend/hackpnw-2023 && npm i
   ```
 
-### Installation
+> If the program is being tested, go to `about:config` (for FireFox), and set `security.fileuri.strict_origin_policy` to `false` to disable any CORS errors. 
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/github_username/repo_name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+Then, go to `HackPNW-2023/frontend/hackpnw-2023/src/api/Database.js`, and change the `ngrock_url` variable to the url if your API (the code setup in `/backend`).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -104,10 +93,7 @@ This is an example of how to list things you need to use the software and how to
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
+Have two separate terminal prompts open and run `npm start` in the frontend and backend directories.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
@@ -154,24 +140,24 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 
 <!-- CONTACT -->
-## Contact
+<!-- ## Contact
 
 Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
+Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name) -->
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<!-- <p align="right">(<a href="#readme-top">back to top</a>)</p> -->
 
 
 
 <!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
+<!-- ## Acknowledgments
 
 * []()
 * []()
-* []()
+* []() -->
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<!-- <p align="right">(<a href="#readme-top">back to top</a>)</p> -->
 
 
 
