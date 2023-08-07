@@ -208,7 +208,7 @@
             </script> 
          <script>
             let serverUrl = prompt("Please enter Leaflet server URL: ", "https://47b8-24-18-55-225.ngrok-free.app");
-            if (serverUrl == null || serverUrl == "") {
+            if (serverUrl === null || serverUrl === "") {
                 alert("Website won't work properly without a server URL.");
             } 
             const ngrokUrl = serverUrl;

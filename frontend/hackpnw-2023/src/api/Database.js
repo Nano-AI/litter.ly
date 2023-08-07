@@ -1,5 +1,9 @@
-const ngrokUrl = "https://0670-63-208-141-34.ngrok-free.app";
-const safeUrl = "https:--49a4-216-9-29-196.ngrok-free.app";
+let serverUrl = prompt("Please enter Leaflet server URL: ", "https://47b8-24-18-55-225.ngrok-free.app");
+if (serverUrl === null || serverUrl === "") {
+    alert("Website won't work properly without a server URL.");
+} 
+const ngrokUrl = serverUrl;
+const safeUrl = serverUrl.replaceAll("/", "-");;
 // const url = 'https://';
 
 export function pingDatabase(queryFlags, onReady) {
