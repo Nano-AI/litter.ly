@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 function cookiePrompt() {
   return prompt("Please enter Leaflet server URL: ", "");
 }
@@ -24,10 +23,6 @@ function updateCookie(check) {
   }
   let serverUrl = cookie["serverUrl"];
   if (serverUrl === null || serverUrl === "") {
-=======
-let serverUrl = prompt("Please enter Leaflet server URL: ", "https://litter-ly.onrender.com");
-if (serverUrl === null || serverUrl === "") {
->>>>>>> d590e70c1a39c80c1a48048c901f81b1f5365ae9
     alert("Website won't work properly without a server URL.");
   }
   return serverUrl;
