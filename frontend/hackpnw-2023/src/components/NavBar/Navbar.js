@@ -15,8 +15,16 @@ import MenuItem from '@mui/material/MenuItem';
 import "./NavBar.css"
 
 import {ReactComponent as AdbIcon} from "../../logo2.svg";
+import { Link } from 'react-router-dom';
 
-const pages = [];
+
+let cookie = JSON.parse(document.cookie);
+const pageName = [
+  "Litter Map",
+]
+const pageUrl = {
+  "Litter Map" : cookie["serverUrl"] + "/littermap",
+}
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function NavBar() {
@@ -90,9 +98,9 @@ function NavBar() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
+              {pageName.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Link href={pageUrl[page]}><Typography textAlign="center">{page}</Typography></Link>
                 </MenuItem>
               ))}
             </Menu>
@@ -116,11 +124,12 @@ function NavBar() {
             LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+            {pageName.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
+                href={pageUrl[page]}
               >
                 {page}
               </Button>
