@@ -1,7 +1,36 @@
-let serverUrl = prompt("Please enter Leaflet server URL: ", "https://litter-ly.onrender.com");
-if (serverUrl === null || serverUrl === "") {
+function cookiePrompt() {
+  return prompt("Please enter Leaflet server URL: ", "");
+}
+
+function getCookie() {
+  if (document.cookie == "") {
+    return {};
+  }
+  return JSON.parse(document.cookie);
+}
+
+function setCookie() {
+  let cookie = getCookie();
+  let serverUrl = cookiePrompt();
+  cookie["serverUrl"] = serverUrl;
+  document.cookie = JSON.stringify(cookie);
+}
+
+function updateCookie(check) {
+  let cookie = getCookie();
+  if (cookie["serverUrl"] == undefined) {
+    setCookie();
+  }
+  let serverUrl = cookie["serverUrl"];
+  if (serverUrl === null || serverUrl === "") {
     alert("Website won't work properly without a server URL.");
-} 
+  }
+  return serverUrl;
+}
+
+var serverUrl = updateCookie();
+console.log(serverUrl);
+
 const ngrokUrl = serverUrl;
 const safeUrl = serverUrl.replaceAll("/", "-");;
 // const url = 'https://';
@@ -12,12 +41,16 @@ export function pingDatabase(queryFlags, onReady) {
   console.log(reqUrl);
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) {
-      // console.log("RAAA")
-      // console.log(xhttp.response)
-      // console.log(onReady)
-      onReady(xhttp);
-      // return xhttp.responseText;
+    console.log(this)
+    if (this.readyState == 4) {
+      if (this.status == 200) {
+        console.log(onReady);
+        onReady(xhttp);
+      }
+      else {
+        console.log("updoate")
+        setCookie();
+      }
     }
   };
   xhttp.open("GET", reqUrl, true);

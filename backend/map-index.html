@@ -1,79 +1,86 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">        
-        <style>
-            #map { 
-                height:1000px; 
-            }
-            .hoverheader {
-                cursor:  move;
-                font-weight: lighter;
-            }
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
-            .headerlink {
-                text-decoration: none;
-            }
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+        #map {
+            height: 1000px;
+        }
 
-            .headerlink:hover {
-                text-decoration: none;
-            }
-            header {
-                height: 5%;
-                background-color: grey;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 10px 10%;
-            }
-            .nav_links li {
+        .hoverheader {
+            cursor: move;
+            font-weight: lighter;
+        }
+
+        .headerlink {
+            text-decoration: none;
+        }
+
+        .headerlink:hover {
+            text-decoration: none;
+        }
+
+        header {
+            height: 5%;
+            background-color: grey;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 10%;
+        }
+
+        .nav_links li {
             display: inline-block;
             padding: 0px 20px;
-            }
+        }
 
-            .nav_links a {
+        .nav_links a {
             font-size: 20px;
             color: white;
             text-decoration: none;
-            }
-            .toggle1:hover {
+        }
+
+        .toggle1:hover {
             transition: 0.1s;
             font-size: 2.0em;
             opacity: 1;
-            }
+        }
 
-            .toggle2:hover {
+        .toggle2:hover {
             transition: 0.1s;
             font-size: 2.0em;
             opacity: 1;
-            }
+        }
 
-            .toggle1 {
-                font-size:23px;
-                margin-left:-130px;
-                position:absolute;
-            }
+        .toggle1 {
+            font-size: 23px;
+            margin-left: -130px;
+            position: absolute;
+        }
 
-            .toggle2 {
-                font-size:23px;
-                margin-left:-90px;
-                position:absolute;
-            }
+        .toggle2 {
+            font-size: 23px;
+            margin-left: -90px;
+            position: absolute;
+        }
 
-            .toggle3 {
-                font-size:23px;
-                margin-left:-60px;
-                position:absolute;
-            }
+        .toggle3 {
+            font-size: 23px;
+            margin-left: -60px;
+            position: absolute;
+        }
 
-            .toggle4 {
-                position:absolute;
-            }
+        .toggle4 {
+            position: absolute;
+        }
 
-            .modal {
+        .modal {
             display: none;
             position: fixed;
             z-index: 1;
@@ -83,9 +90,9 @@
             height: 100%;
             overflow: auto;
             background-color: rgba(0, 0, 0, 0.4);
-            }
+        }
 
-            .modal-content {
+        .modal-content {
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -98,119 +105,148 @@
             border-radius: 5px;
             width: 80%;
             max-width: 500px;
-            }
+        }
 
-            /* Close button styles */
-            .close {
+        /* Close button styles */
+        .close {
             color: #aaa;
             float: right;
-            align-self:normal !important;
+            align-self: normal !important;
             font-size: 28px;
             font-weight: bold;
             cursor: pointer;
-            }
+        }
 
-            .close:hover,
-            .close:focus {
+        .close:hover,
+        .close:focus {
             color: black;
             text-decoration: none;
             cursor: pointer;
-            }
+        }
 
 
-            /* Form styles */
-            .form-container label,
-            .form-container input,
-            .form-container textarea,
-            .form-container select {
+        /* Form styles */
+        .form-container label,
+        .form-container input,
+        .form-container textarea,
+        .form-container select {
             display: block;
             margin-bottom: 10px;
-            }
+        }
 
-            .form-container button {
+        .form-container button {
             margin-top: 10px;
-            }
-        </style>
-    </head>
+        }
+    </style>
+</head>
 
-    <body>
-        <header style="user-select: none;">
-            <nav>
-               <ul class="nav_links">
-                  <li><a href="#"></a></li>
-               </ul>
-            </nav>
-            <!--<label class="toggle1" onclick='pingDatabase("selectdb/lat-long/partOfDB=true");'>📋</label>-->
-            <label class="toggle1" onclick='pingDatabase("getentries/partOfDB=true");'>📋</label>
-            <label class="toggle2" onclick="pinningMode=true">📍</label>
-            <!--<label class="toggle3">▧</label>-->
-            <!--<label class="slidertoggler settingstoggler fa" >&#xf013;</label>-->
-         </header>
+<body>
+    <header style="user-select: none;">
+        <nav>
+            <ul class="nav_links">
+                <li><a href="#"></a></li>
+            </ul>
+        </nav>
+        <!--<label class="toggle1" onclick='pingDatabase("selectdb/lat-long/partOfDB=true");'>📋</label>-->
+        <label class="toggle1" onclick='pingDatabase("getentries/partOfDB=true");'>📋</label>
+        <label class="toggle2" onclick="pinningMode=true">📍</label>
+        <!--<label class="toggle3">▧</label>-->
+        <!--<label class="slidertoggler settingstoggler fa" >&#xf013;</label>-->
+    </header>
 
-         <div id="map"></div>
-         <div id="newLocationModal" class="modal">
-            <div class="modal-content">
-              <span class="close">&times;</span>
-              <h2>Add a New Pollution Sighting:</h2>
-              <div class="form-container">
+    <div id="map"></div>
+    <div id="newLocationModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add a New Pollution Sighting:</h2>
+            <div class="form-container">
                 <form>
-                  <label for="location">Location:</label>
-                  <input type="text" id="location" name="location" required>
-        
-                  <label for="severity">Severity:</label>
-                  <select id="severity" name="severity" required>
-                    <option value="">-- Select Severity --</option>
-                    <option value="1">Low</option>
-                    <option value="2">Mid-Low</option>
-                    <option value="3">Medium</option>
-                    <option value="4">Mid-High</option>
-                    <option value="5">High</option>
-                  </select>
-        
-                  <label for="imageUrl">Image URL:</label>
-                  <input type="text" id="imageUrl" name="imageUrl">
-        
-                  <label for="description">Description:</label>
-                  <textarea id="description" name="description"></textarea>
-        
-                  <label for="author">Author Name:</label>
-                  <input type="text" id="author" name="author" required>
-        
-                  <label for="tags">Tags:</label>
-                  <input type="text" id="tags" name="tags">
-        
-                  
+                    <label for="location">Location:</label>
+                    <input type="text" id="location" name="location" required>
+
+                    <label for="severity">Severity:</label>
+                    <select id="severity" name="severity" required>
+                        <option value="">-- Select Severity --</option>
+                        <option value="1">Low</option>
+                        <option value="2">Mid-Low</option>
+                        <option value="3">Medium</option>
+                        <option value="4">Mid-High</option>
+                        <option value="5">High</option>
+                    </select>
+
+                    <label for="imageUrl">Image URL:</label>
+                    <input type="text" id="imageUrl" name="imageUrl">
+
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description"></textarea>
+
+                    <label for="author">Author Name:</label>
+                    <input type="text" id="author" name="author" required>
+
+                    <label for="tags">Tags:</label>
+                    <input type="text" id="tags" name="tags">
+
+
                 </form>
                 <button onclick="submitNewLocationData()">Submit</button>
             </div>
-          </div>
-         <script>
+        </div>
+        <script>
             // Get the modal element
             var pinningMode = false;
             var modal = document.getElementById('newLocationModal');
-    
+
             // Get the close button element
             var closeBtn = document.getElementsByClassName('close')[0];
-    
+
             // Close the modal when the close button is clicked
-            closeBtn.onclick = function() {
+            closeBtn.onclick = function () {
                 modal.style.display = 'none';
                 document.getElementById("map").style.zIndex = 2;
             };
-    
+
             // Close the modal when the user clicks outside of it
-            window.onclick = function(event) {
+            window.onclick = function (event) {
                 if (event.target === modal) {
                     modal.style.display = 'none';
                     document.getElementById("map").style.zIndex = 2;
                 }
             };
-            </script> 
-         <script>
-            let serverUrl = prompt("Please enter Leaflet server URL: ", "https://litter-ly.onrender.com");
+        </script>
+        <script>function cookiePrompt() {
+                return prompt("Please enter Leaflet server URL: ", "");
+            }
+
+            function getCookie() {
+                if (document.cookie == "") {
+                    return {};
+                }
+                return JSON.parse(document.cookie);
+            }
+
+            function setCookie() {
+                let cookie = getCookie();
+                let serverUrl = cookiePrompt();
+                cookie["serverUrl"] = serverUrl;
+                document.cookie = JSON.stringify(cookie);
+            }
+
+            function updateCookie(check) {
+                let cookie = getCookie();
+                if (cookie["serverUrl"] == undefined) {
+                    setCookie();
+                }
+                let serverUrl = cookie["serverUrl"];
+                if (serverUrl === null || serverUrl === "") {
+                    alert("Website won't work properly without a server URL.");
+                }
+                return serverUrl;
+            }
+
+            let serverUrl = updateCookie();
             if (serverUrl === null || serverUrl === "") {
                 alert("Website won't work properly without a server URL.");
-            } 
+            }
             const ngrokUrl = serverUrl;
             const safeUrl = serverUrl.replaceAll("/", "-");;
             const url = 'https://corsproxy.io/?';
@@ -224,7 +260,7 @@
             //             let response = xhttp.responseText;
             //             //alert(response);
             //             let obj = JSON.parse(response);
-                        
+
             //             obj.forEach(item => {
             //                 let coords = item.split('$');
             //                 let latitude = parseFloat(coords[0]);
@@ -244,38 +280,42 @@
             var trashIcon = L.icon({
                 iconUrl: 'https://img.icons8.com/?size=512&id=i3BJXuvrH2Au&format=png',
 
-                iconSize:     [55, 55], // size of the icon
-                iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-                popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+                iconSize: [55, 55], // size of the icon
+                iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+                popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
             });
-            function pingDatabase (queryFlags) {
+            function pingDatabase(queryFlags) {
                 let reqUrl = url + encodeURIComponent(`${ngrokUrl}/${queryFlags}`);
                 console.log(reqUrl);
                 var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-                        let response = xhttp.responseText;
-                        //alert(response);
-                        let obj = JSON.parse(response);
-                        let latlongs = [];
-                        let itemIndex = 0;
-                        obj.forEach(item => {
-                            latlongs.push(item["lat-long"]);
-                        });
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4) {
+                        if (this.status == 200) {
+                            let response = xhttp.responseText;
+                            //alert(response);
+                            let obj = JSON.parse(response);
+                            let latlongs = [];
+                            let itemIndex = 0;
+                            obj.forEach(item => {
+                                latlongs.push(item["lat-long"]);
+                            });
 
-                        latlongs.forEach(item => {
-                            let coords = item.split('$');
-                            let latitude = parseFloat(coords[0]);
-                            let longitude = parseFloat(coords[1]);
-                            var marker = L.marker([latitude, longitude], {icon: trashIcon}).addTo(map);
-                            marker.bindPopup(`<h5>Location: ${obj[itemIndex]["location"].replaceAll("+", " ")}, Problem: 
+                            latlongs.forEach(item => {
+                                let coords = item.split('$');
+                                let latitude = parseFloat(coords[0]);
+                                let longitude = parseFloat(coords[1]);
+                                var marker = L.marker([latitude, longitude], { icon: trashIcon }).addTo(map);
+                                marker.bindPopup(`<h5>Location: ${obj[itemIndex]["location"].replaceAll("+", " ")}, Problem: 
                                         ${obj[itemIndex]["description"].replaceAll("+", " ")}</h5>`).openPopup();
-                            itemIndex++;
-                            //alert(latitude + " " + longitude);
-                        });
-                        itemIndex = 0;
-                        //
-                        //return xhttp.responseText;
+                                itemIndex++;
+                                //alert(latitude + " " + longitude);
+                            });
+                            itemIndex = 0;
+                            //
+                            //return xhttp.responseText;
+                        } else {
+                            setCookie();
+                        }
                     }
                 };
                 xhttp.open("GET", reqUrl, true);
@@ -283,18 +323,18 @@
                 xhttp.send();
             }
 
-            function writeToDatabase (queryFlags) {
+            function writeToDatabase(queryFlags) {
                 let reqUrl = url + encodeURIComponent(`${ngrokUrl}/${queryFlags}`);
                 console.log(reqUrl);
                 var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function() {
+                xhttp.onreadystatechange = function () {
                     if (this.readyState == 4 && this.status == 200) {
                         console.log("Success.");
                     }
                 };
                 xhttp.open("GET", reqUrl, true);
                 xhttp.setRequestHeader("ngrok-skip-browser-warning", "true");
-                xhttp.send();                
+                xhttp.send();
             }
 
             const map = L.map('map').setView([47.6062, -122.3321], 13);
@@ -303,17 +343,17 @@
                 maxZoom: 19,
                 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             }).addTo(map);
-                // Create a marker layer group
+            // Create a marker layer group
             var markerGroup = L.layerGroup().addTo(map);
             var mostRecentMarker;
             // Function to handle click events
             function handleMapClick(e) {
-                if(!pinningMode) return;
+                if (!pinningMode) return;
                 // Add a new marker at the clicked location
                 document.getElementById("map").style.zIndex = 0;
                 modal.style.display = 'block';
-                pinningMode = false;    
-                mostRecentMarker = L.marker(e.latlng, {icon: trashIcon});
+                pinningMode = false;
+                mostRecentMarker = L.marker(e.latlng, { icon: trashIcon });
                 mostRecentMarker.addTo(markerGroup);
             }
 
@@ -338,6 +378,7 @@
                 writeToDatabase(`insertdb/lat-long=${mostRecentMarker.getLatLng().lat}$${mostRecentMarker.getLatLng().lng};location=${locData};severity=${severityData};photo-url=${imageData};description=${descriptionData};author=${authorData};tags=${tagData}`);
             }
         </script>
-   
-    </body>
+
+</body>
+
 </html>
