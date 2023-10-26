@@ -3,22 +3,35 @@ function cookiePrompt() {
 }
 
 function getCookie() {
-  if (document.cookie == "") {
-    return {};
+  let cookieRes;
+  try {
+    cookieRes = document.cookie.split(";").map(v => v .replace(/\s/g, "").split("="));
   }
-  return JSON.parse(document.cookie);
+  catch (e) {
+    console.log(e);
+    document.cookie = "";
+    return [["serverUrl", ""]];
+  }
+  return cookieRes
 }
 
 function setCookie() {
   let cookie = getCookie();
   let serverUrl = cookiePrompt();
+  let n = 0;
+  cookie.forEach((v) => {
+      if(v[0] === "serverUrl") {
+        cookie[n][1] = serverUrl;
+      }
+      n++;
+  })
   cookie["serverUrl"] = serverUrl;
   document.cookie = JSON.stringify(cookie);
 }
 
 function updateCookie(check) {
   let cookie = getCookie();
-  if (cookie["serverUrl"] == undefined) {
+  if (cookie["serverUrl"] === undefined) {
     setCookie();
   }
   let serverUrl = cookie["serverUrl"];
@@ -28,7 +41,7 @@ function updateCookie(check) {
   return serverUrl;
 }
 
-var serverUrl = updateCookie();
+var serverUrl = "https://litter-ly.onrender.com"; // FUCK YOU ADI
 console.log(serverUrl);
 
 const ngrokUrl = serverUrl;
@@ -49,7 +62,7 @@ export function pingDatabase(queryFlags, onReady) {
       }
       else {
         console.log("updoate")
-        setCookie();
+        //setCookie();
       }
     }
   };

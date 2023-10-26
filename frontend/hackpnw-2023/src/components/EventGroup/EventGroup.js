@@ -29,7 +29,7 @@ function EventCardHolder() {
           justify="center"
           alignItems="center"
         >
-          {state.data ? state.data.map((e) => {
+          {state.data ? state.data.toReversed().map((e) => {
             console.log("TSTEST")
             console.log(e)
             return (

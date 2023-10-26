@@ -1,6 +1,6 @@
 div:has(#scroll-dialog-title) {
   width: 100%;
-  background-color: aqua;
+   /* background-color: aqua; */
 }
 
 .background-details {

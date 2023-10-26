@@ -18,12 +18,12 @@ import {ReactComponent as AdbIcon} from "../../logo2.svg";
 import { Link } from 'react-router-dom';
 
 
-let cookie = JSON.parse(document.cookie);
+let cookie = "https://litter-ly.onrender.com";
 const pageName = [
   "Litter Map",
 ]
 const pageUrl = {
-  "Litter Map" : cookie["serverUrl"] + "/littermap",
+  "Litter Map" : cookie + "/littermap",
 }
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
